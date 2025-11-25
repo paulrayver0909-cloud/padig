@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Portfolio — Edison Vicente</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0b0b0b;
+    --muted: #dcdcdc;
+    --accent: #b30000;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    background: var(--bg);
+    font-family: "Montserrat", sans-serif;
+    color: #fff;
+  }
+
+  .appbar {
+    height: 60px;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 10;
+  }
+
+  .btn-top {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 18px;
+    margin-left: 10px;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+  }
+
+  .btn-top:hover { background: #ff0000; }
+
+  .slider-wrap {
+    position: relative;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+  }
+
+  .slider {
+    display: flex;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(.2,.9,.3,1);
+    will-change: transform;
+  }
+
+  .slide {
+    min-width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    padding: 30px 40px;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .next-btn, .prev-btn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+  }
+
+  .next-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: var(--accent);
+  }
+
+  .prev-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: var(--accent);
+  }
+
+  .next-btn:hover, .prev-btn:hover {
+    background: #ff0000;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex;
+    justify-content: center; /* horizontal center of entire hero */
+    align-items: center;     /* vertical center of hero */
+    text-align: left;
+    height: 100%; 
+    gap: 50px;
+    padding: 0 50px;
+  }
+
+  .hero-text {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .hero-text h1 { font-size: 36px; color: var(--accent); margin: 0; }
+  .hero-text h2 { font-size: 20px; margin: 0 0 10px 0; }
+  .hero-text p { font-size: 16px; color: var(--muted); line-height: 1.4; }
+
+  /* Vertical image box */
+  .hero-img-box {
+    flex: 0 0 220px; /* fixed width for the box */
+    height: 350px;   /* taller than wide */
+    background: #1a1a1a;
+    border: 3px solid var(--accent);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 20px rgba(255,0,0,0.5);
+    overflow: hidden;
+  }
+
+  .hero-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+
+  .education h2, .achievements h2, .family h2 {
+    font-size: 36px;
+    color: var(--accent);
+    text-align: center;
+    margin-top: 0;
+  }
+
+  .edu-list {
+    max-width: 1000px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .edu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .edu-logo { width: 80px; height: 80px; border-radius: 10px; overflow: hidden; border: 3px solid var(--accent); }
+  .edu-logo img { width: 100%; height: 100%; object-fit: cover; }
+
+  .ach-item {
+    background: #1a1a1a; padding: 12px; margin-bottom: 12px;
+    border-left: 4px solid var(--accent); border-radius: 6px; font-size: 14px;
+  }
+
+  /* FAMILY */
+  .family-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    gap: 20px;
+    margin: 20px auto;
+    text-align: center;
+  }
+
+  .family-card {
+    background: #1a1a1a;
+    padding: 15px;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+  }
+
+  .family-photo {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 10px;
+    overflow: hidden;
+    border-radius: 0;
+    border: 3px solid var(--accent);
+  }
+
+  .family-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+  @media (max-width: 900px) {
+    .hero { flex-direction: column; text-align: center; gap: 20px; }
+    .hero-text { max-width: 100%; }
+    .hero-img-box { width: 160px; height: 250px; }
+    .edu-list { grid-template-columns: 1fr 1fr; }
+    .family-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+
+<body>
+
+<header class="appbar">
+  <button class="btn-top" data-slide="0">Home</button>
+  <button class="btn-top" data-slide="1">Educational Attainment</button>
+  <button class="btn-top" data-slide="2">Achievements</button>
+  <button class="btn-top" data-slide="3">My Family</button>
+</header>
+
+<div class="slider-wrap">
+  <div class="slider" id="slider">
+
+    <!-- HOME -->
+    <section class="slide hero" data-index="0">
+      <div class="hero-text">
+        <h2>HELLO! WELCOME</h2>
+        <h1>I'm Edison Padig Vicente</h1>
+        <p>Hello! I’m Edison Padig Vicente, a Computer Science student who loves exploring the intersection between creativity and technology. I enjoy working on projects that involve web development, design, and logical problem-solving. My goal is to become a skilled software engineer capable of developing solutions that make people’s lives easier through technology.</p>
+      </div>
+      <div class="hero-img-box">
+        <img src="https://uploads.onecompiler.io/4435ez9fj/444qum2qv/691d1086-7206-4c66-855a-2a21cabd8521.jfif" alt="Paul">
+      </div>
+      <button class="next-btn" data-next>Next →</button>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="slide education" data-index="1">
+      <h2>Educational Attainment</h2>
+      <div class="edu-list">
+        <div class="edu-item">
+          <div class="edu-logo"><img src="https://uploads.onecompiler.io/4435ez9fj/44585ts44/Messenger_creation_A0931C41-2A01-49B4-B0D4-CF2F97BDAE8F.jpeg"></div>
+          <div><h3>Primary Education</h3><p>Kalinga Colleges Of Science and Technology — Graduated 2018</p></div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-logo"><img src="https://uploads.onecompiler.io/4435ez9fj/44585ts44/Messenger_creation_D25423FE-2C26-4512-B3BF-836922094516.jpeg"></div>
+          <div><h3>Secondary Education</h3><p>Tabuk City National High School — Graduated 2022</p></div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-logo"><img src="https://uploads.onecompiler.io/4435ez9fj/44585ts44/Messenger_creation_D25423FE-2C26-4512-B3BF-836922094516.jpeg"></div>
+          <div><h3>Senior High School</h3><p>Tabuk City National High School — Graduated 2025, ABM Strand — Senior High School (2025)</p></div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-logo"><img src="https://uploads.onecompiler.io/4435ez9fj/444wwpxkt/UC.jpg"></div>
+          <div><h3>Tertiary Education</h3><p>University of the Cordilleras — BS Computer Science (Ongoing)</p></div>
+        </div>
+      </div>
+      <button class="prev-btn" data-prev>Previous ←</button>
+      <button class="next-btn" data-next>Next →</button>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="slide achievements" data-index="2">
+      <h2>Achievements</h2>
+      <div style="max-width:900px;margin:auto;">
+        <div class="ach-item">Perfect Attendance - 2025</div>
+        <div class="ach-item">Best in Research - 2025</div>
+        <div class="ach-item">Athlete of the Year - 2024</div>
+        <div class="ach-item">Work Immersion - 2025</div>
+        <div class="ach-item">Best in Active Community Involvement - 2025</div>
+        <div class="ach-item">Developed Business Skills - 2025</div>
+      </div>
+      <button class="prev-btn" data-prev>Previous ←</button>
+      <button class="next-btn" data-next>Next →</button>
+    </section>
+
+    <!-- FAMILY -->
+    <section class="slide family" data-index="3">
+      <h2>My Family</h2>
+      <div class="family-grid">
+        <div class="family-card">
+          <div class="family-photo"><img src="https://uploads.onecompiler.io/4435ez9fj/445pzcv9e/Messenger_creation_E1CDD209-BF85-461A-BEF2-EAE5AAF4E1A5.jpeg"></div>
+          <h3>Mother</h3>
+          <p>This is my mom, Brenda. She has been working in Singapore for more than 15 years.</p>
+        </div>
+        <div class="family-card">
+          <div class="family-photo"><img src="https://uploads.onecompiler.io/4435ez9fj/445pzcv9e/Messenger_creation_6AEEFFE7-4595-4E64-8BA8-359AE8FB8970.jpeg"></div>
+          <h3>Father</h3>
+          <p>This is my father,Eduardo. He is in Santiago City and is recovering because he had a stroke in 2019</p>
+        </div>
+        <div class="family-card">
+          <div class="family-photo"><img src="https://uploads.onecompiler.io/4435ez9fj/445pzcv9e/Messenger_creation_8F0B2EA5-F780-4A07-9C41-3DBD1748A15F.jpeg"></div>
+          <h3>Bestfriend</h3>
+          <p>This is Jacob sometimes I called him "Kobe". He and I were baptized together and that's where we became close and became best friend and we treat each other as brother.</p>
+        </div>
+      </div>
+      <button class="prev-btn" data-prev>Previous ←</button>
+      <button class="next-btn" data-next>Back to Home →</button>
+    </section>
+
+  </div>
+</div>
+
+<script>
+(function(){
+  const slider = document.getElementById('slider');
+  const slides = Array.from(slider.querySelectorAll('.slide'));
+  let current = 0;
+
+  function applyTransform() {
+    const offset = - current * window.innerWidth;
+    slider.style.transform = `translateX(${offset}px)`;
+  }
+
+  function goToSlide(i) {
+    current = (i + slides.length) % slides.length;
+    applyTransform();
+  }
+
+  document.querySelectorAll('.btn-top').forEach(btn => {
+    btn.addEventListener('click', () => goToSlide(Number(btn.getAttribute('data-slide'))));
+  });
+
+  document.querySelectorAll('[data-next]').forEach(btn => {
+    btn.addEventListener('click', () => goToSlide(current + 1));
+  });
+
+  document.querySelectorAll('[data-prev]').forEach(btn => {
+    btn.addEventListener('click', () => goToSlide(current - 1));
+  });
+
+  window.addEventListener('resize', applyTransform);
+  applyTransform();
+})();
+</script>
+
+</body>
+</html>
